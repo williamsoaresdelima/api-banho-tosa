@@ -1,3 +1,4 @@
+import { PetTypeEntity } from "@core/entity/pet-type.entity";
 import { PetEntity } from "@core/entity/pet.entity";
 
 export type PetRespositorySearchParams = {

@@ -2,15 +2,15 @@ import * as express from "express";
 import { inject } from "inversify";
 import { 
 	httpGet, 
-	httpPost, 
-	httpPut, 
+	httpPut,
+	httpPost,
 	interfaces,
 	controller, 
 	queryParam, 
-	requestBody, 
-	requestParam, 
-	BaseHttpController,
 	httpDelete, 
+	requestBody,
+	requestParam,
+	BaseHttpController,
 } from "inversify-express-utils";
 
 import TYPES from "../../types";
@@ -19,10 +19,10 @@ import { CreatePetDto } from "../dtos/create-pet.dto";
 import { UpdatePetDto } from "../dtos/update-pet.dto";
 import { ValidateDtoMiddleware } from "../middlewares/validate-dto.middleware";
 import { ListPetInterface } from "../../core/usecases/pet/list-pet/list-pet.interface";
-import { CreatePetInterface } from "../../core/usecases/pet/create-pet/create-pet.interface";
-import { FindPetByIdInterface } from "@core/usecases/pet/find-pet-by-id/find-pet-by-id.interface";
 import { UpdatePetInterface } from "@core/usecases/pet/update-pet/update-pet.interface";
 import { DeletePetInterface } from "@core/usecases/pet/delete-pet/delete-pet.interface";
+import { CreatePetInterface } from "../../core/usecases/pet/create-pet/create-pet.interface";
+import { FindPetByIdInterface } from "@core/usecases/pet/find-pet-by-id/find-pet-by-id.interface";
 
 
 @controller('/pet')
@@ -82,8 +82,6 @@ export class PetController extends BaseHttpController implements interfaces.Cont
 	public async create(
 		@requestBody() body: CreatePetDto.Body,
 	): Promise<interfaces.IHttpActionResult> {
-		console.log('BODY: ', body)
-
 		const result = this._createPetService.execute({
 			name: body.name,
 			age: body.age,

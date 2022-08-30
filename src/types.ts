@@ -1,11 +1,17 @@
 const TYPES = {
+    CustomMiddleware: Symbol.for("CustomMiddleware"),
     ListPetInterface: Symbol.for("ListPetInterface"),
     CreatePetInterface: Symbol.for("CreatePetInterface"),
-    FindPetByIdInterface: Symbol.for("FindPetByIdInterface"),
     UpdatePetInterface: Symbol.for("UpdatePetInterface"),
     DeletePetInterface: Symbol.for("DeletePetInterface"),
+    FindPetByIdInterface: Symbol.for("FindPetByIdInterface"),
+    ListPetTypeInterface: Symbol.for("ListPetTypeInterface"),
+    CreatePetTypeInterface: Symbol.for("CreatePetTypeInterface"),
+    UpdatePetTypeInterface: Symbol.for("UpdatePetTypeInterface"),
+    DeletePetTypeInterface: Symbol.for("DeletePetTypeInterface"),
     PetRepositoryInterface: Symbol.for("PetRepositoryInterface"),
-    CustomMiddleware: Symbol.for("CustomMiddleware"),
+    FindPetTypeByIdInterface: Symbol.for("FindPetTypeByIdInterface"),
+    PetTypeRepositoryInterface: Symbol.for("PetTypeRepositoryInterface"),
 };
 
 export default TYPES;

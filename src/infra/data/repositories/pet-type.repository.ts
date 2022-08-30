@@ -1,18 +1,18 @@
 import { injectable } from "inversify";
 
 import {
-	PetRepositoryInterface,
-	PetRespositoryCreateParams,
-	PetRespositorySearchParams
-} from "../../../core/providers/data/pet-repository.interface";
+	PetTypeRepositoryInterface,
+	PetTypeRespositoryCreateParams,
+	PetTypeRespositorySearchParams
+} from "../../../core/providers/data/pet-type-repository.interface";
 
-import { PetEntity } from "../../../core/entity/pet.entity";
+import { PetTypeEntity } from "../../../core/entity/pet-type.entity";
 
-let data: PetEntity[] = [];
+let data: PetTypeEntity[] = [];
 
 @injectable()
-export class PetRepository implements PetRepositoryInterface {
-	create(model: PetRespositoryCreateParams): PetEntity {
+export class PetTypeRepository implements PetTypeRepositoryInterface {
+	create(model: PetTypeRespositoryCreateParams): PetTypeEntity {
 		const dataSorted = data.sort((a, b) => {
 			if ( a.id > b.id ){
 				return -1;
@@ -30,32 +30,28 @@ export class PetRepository implements PetRepositoryInterface {
 		const dataModel = {
 			id,
 			name: model.name,
-			age: model.age,
-			petType: model.petType
 		}
 
 		data.push(dataModel);
 
-		return PetEntity.build(
+		return PetTypeEntity.build(
 			dataModel.id,
-			dataModel.name,
-			dataModel.age,
-			dataModel.petType
+			dataModel.name
 		);
 	}
 
-	search(model: PetRespositorySearchParams): PetEntity[] {
+	search(model: PetTypeRespositorySearchParams): PetTypeEntity[] {
 		if (model.name) {
 			return data.filter(item => item.name === model.name)
 		}
 		return data
 	}
 
-	findById(id: number): PetEntity {
+	findById(id: number): PetTypeEntity {
 		return data.find(item => item.id === id)
 	}
 
-	update(id: number, body: PetRespositoryCreateParams): PetEntity {
+	update(id: number, body: PetTypeRespositoryCreateParams): PetTypeEntity {
 		let pet
 
 		data = data.map(item => {
