@@ -12,7 +12,9 @@
 > API de banho e tosa
 
 ### 🏠 [Homepage](https://github.com/williamsoaresdelima/api-banho-tosa)
-
+Esta api foi desenvolvida para atender os requisitos do módulo de desenvolvimento de back-end com typescript
+e contempla nesta primeira versão um CRUD:
+Cadastro de Pets, com seus tipos, bem como listagem, edição e exclusão em memória
 
 <br/>
 
