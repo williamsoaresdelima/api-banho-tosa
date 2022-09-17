@@ -4,7 +4,7 @@ import { inject, injectable } from "inversify";
 import TYPES from "../../../../types";
 import { PetTypeEntity } from "@core/entity/pet-type.entity";
 import { PetTypeRepositoryInterface } from "@core/providers/data/pet-type-repository.interface";
-import { UpdatePetTypeInterface, UpdatePetTypeUseCaseParams } from "./update-pet.-typeinterface";
+import { UpdatePetTypeInterface, UpdatePetTypeUseCaseParams } from "./update-pet.-type.interface";
 
 @injectable()
 export class UpdatePetTypeUseCase implements UpdatePetTypeInterface {

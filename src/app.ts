@@ -12,16 +12,20 @@ import "./presentation/controllers/user.controller";
 import "./presentation/controllers/pet-type.controller";
 
 import { PetRepository } from "./infra/data/repositories/pet.repository";
+import { UserRepository } from "./infra/data/repositories/user.repository";
 import { ListPetUseCase } from "./core/usecases/pet/list-pet/list-pet.usecase";
 import { CustomMiddleware } from "./presentation/middlewares/custom.middleware";
 import { PetTypeRepository } from "./infra/data/repositories/pet-type.repository";
 import { ListPetInterface } from "./core/usecases/pet/list-pet/list-pet.interface";
-import { CreatePetUseCase } from "./core/usecases/pet/create-pet/create-pet.usecase";
+import { CreateUserUseCase } from "./core/usecases/user/create/create-user.usecase";
 import { UpdatePetUseCase } from "./core/usecases/pet/update-pet/update-pet.usecase";
 import { DeletePetUseCase } from "./core/usecases/pet/delete-pet/delete-pet.usecase";
+import { CreatePetUseCase } from "./core/usecases/pet/create-pet/create-pet.usecase";
+import { CreateUserInterface } from "@core/usecases/user/create/create-user.interface";
 import { PetRepositoryInterface } from "./core/providers/data/pet-repository.interface";
 import { CreatePetInterface } from "./core/usecases/pet/create-pet/create-pet.interface";
 import { UpdatePetInterface } from "./core/usecases/pet/update-pet/update-pet.interface";
+import { UserRepositoryInterface } from "./core/providers/data/user-repository.interface";
 import { DeletePetInterface } from "./core//usecases/pet/delete-pet/delete-pet.interface";
 import { FindPetByIdUseCase } from "./core/usecases/pet/find-pet-by-id/find-pet-by-id.usecase";
 import { PetTypeRepositoryInterface } from "./core/providers/data/pet-type-repository.interface";
@@ -32,7 +36,7 @@ import { UpdatePetTypeUseCase } from "./core/usecases/pet-type/update-pet-type/u
 import { DeletePetTypeUseCase } from "./core/usecases/pet-type/delete-pet-type/delete-pet.usecase";
 import { ListPetTypeInterface } from "./core/usecases/pet-type/list-pet-type/list-pet-type.interface";
 import { CreatePetTypeInterface } from "./core/usecases/pet-type/create-pet-type/create-pet-type.interface";
-import { UpdatePetTypeInterface } from "./core/usecases/pet-type/update-pet-type/update-pet.-typeinterface";
+import { UpdatePetTypeInterface } from "./core/usecases/pet-type/update-pet-type/update-pet.-type.interface";
 import { DeletePetTypeInterface } from "./core/usecases/pet-type/delete-pet-type/delete-pet-type.interface";
 import { FindPetTypeByIdUseCase } from "./core/usecases/pet-type/find-pet-type-by-id/find-pet-type-by-id.usecase";
 import { FindPetTypeByIdInterface } from "./core/usecases/pet-type/find-pet-type-by-id/find-pet-type-by-id.interface";
@@ -48,6 +52,18 @@ export class App {
   }
 
   configDependencies(): void {
+
+    // container.bind<ListUserInterface>(TYPES.ListUserInterface).to(ListUserUseCase);
+    container
+      .bind<CreateUserInterface>(TYPES.CreateUserInterface)
+      .to(CreateUserUseCase);
+    // container
+    //   .bind<UpdateUserInterface>(TYPES.UpdateUserInterface)
+    //   .to(UpdateUserUseCase);
+    // container
+    //   .bind<DeleteUserInterface>(TYPES.DeleteUserInterface)
+    //   .to(DeletePetUseCase);
+
     container.bind<ListPetInterface>(TYPES.ListPetInterface).to(ListPetUseCase);
     container
       .bind<CreatePetInterface>(TYPES.CreatePetInterface)
@@ -82,6 +98,9 @@ export class App {
     container
       .bind<PetTypeRepositoryInterface>(TYPES.PetTypeRepositoryInterface)
       .to(PetTypeRepository);
+      container
+      .bind<UserRepositoryInterface>(TYPES.UserRepositoryInterface)
+      .to(UserRepository);
     container
       .bind<FindPetTypeByIdInterface>(TYPES.FindPetTypeByIdInterface)
       .to(FindPetTypeByIdUseCase);

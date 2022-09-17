@@ -20,7 +20,7 @@ import { UpdatePetTypeDto } from "../dtos/update-pet-type.dto";
 import { ValidateDtoMiddleware } from "../middlewares/validate-dto.middleware";
 import { ListPetTypeInterface } from "@core/usecases/pet-type/list-pet-type/list-pet-type.interface";
 import { CreatePetTypeInterface } from "@core/usecases/pet-type/create-pet-type/create-pet-type.interface";
-import { UpdatePetTypeInterface } from "@core/usecases/pet-type/update-pet-type/update-pet.-typeinterface";
+import { UpdatePetTypeInterface } from "@core/usecases/pet-type/update-pet-type/update-pet.-type.interface";
 import { DeletePetTypeInterface } from "@core/usecases/pet-type/delete-pet-type/delete-pet-type.interface";
 import { FindPetTypeByIdInterface } from "@core/usecases/pet-type/find-pet-type-by-id/find-pet-type-by-id.interface";
 

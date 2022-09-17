@@ -1,5 +1,3 @@
-import { PetTypeEntity } from "@core/entity/pet-type.entity";
-
 export class UpdatePetTypeUseCaseParams {
 	name: string;
 }
