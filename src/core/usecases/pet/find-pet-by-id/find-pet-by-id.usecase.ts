@@ -2,7 +2,8 @@ import "reflect-metadata";
 import { inject, injectable } from "inversify";
 
 import TYPES from "../../../../types";
-import { PetEntity } from "@core/entity/pet.entity";
+
+import { IPetDbModel } from "src/infra/data/models/pet.model";
 import { FindPetByIdInterface } from "./find-pet-by-id.interface";
 import { PetRepositoryInterface } from "@core/providers/data/pet-repository.interface";
 
@@ -16,7 +17,7 @@ export class FindPetByIdUseCase implements FindPetByIdInterface {
     this._petRepository = petRepository;
   }
 
-	execute(id: number): PetEntity {
+	async execute(id: string): Promise<IPetDbModel> {
 		return this._petRepository.findById(id);
 	}
 }

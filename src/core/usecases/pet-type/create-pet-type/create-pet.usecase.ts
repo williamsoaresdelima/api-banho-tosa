@@ -5,6 +5,7 @@ import TYPES from "../../../../types";
 import { PetTypeEntity } from "@core/entity/pet-type.entity";
 import { PetTypeRepositoryInterface } from "@core/providers/data/pet-type-repository.interface";
 import { CreatePetTypeInterface, CreatePetTypeUseCaseParams } from "./create-pet-type.interface";
+import { IPetTypeDbModel } from "src/infra/data/models/pet-type.model";
 
 @injectable()
 export class CreatePetTypeUseCase implements CreatePetTypeInterface {
@@ -17,19 +18,11 @@ export class CreatePetTypeUseCase implements CreatePetTypeInterface {
     this._petTypeRepository = petTypeRepository;
   }
 
-  execute(model: CreatePetTypeUseCaseParams): PetTypeEntity {
-    const petFromDb = this._petTypeRepository.search({
-      name: model.name
-    });
+  async execute(dto: CreatePetTypeUseCaseParams): Promise<IPetTypeDbModel> {
+    const petType = await this._petTypeRepository.create({
+      name: dto.name,
+    })
 
-    if (petFromDb.length) {
-      throw new Error("Pet type already exists");
-    }
-
-    const result = this._petTypeRepository.create({
-      name: model.name,
-    });
-
-    return result;
+    return petType
   }
 }

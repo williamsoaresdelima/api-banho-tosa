@@ -1,5 +1,5 @@
-import { PetEntity } from "@core/entity/pet.entity";
+import { IPetDbModel } from "src/infra/data/models/pet.model";
 
 export interface FindPetByIdInterface {
-	execute(id: number): PetEntity;
+	execute(id: string): Promise<IPetDbModel>;
 }

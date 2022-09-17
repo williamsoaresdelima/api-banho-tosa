@@ -1,5 +1,4 @@
-import { PetTypeEntity } from "@core/entity/pet-type.entity";
-import { PetEntity } from "@core/entity/pet.entity";
+import { IPetDbModel } from "src/infra/data/models/pet.model";
 
 export type PetRespositorySearchParams = {
 	name?: string;
@@ -8,13 +7,13 @@ export type PetRespositorySearchParams = {
 export type PetRespositoryCreateParams = {
 	name: string;
 	age: number;
-	petType: number;
+	petType: string;
 }
 
 export interface PetRepositoryInterface {
-	findById(id: number): PetEntity;
-	create(model: PetRespositoryCreateParams): PetEntity;
-	search(model: PetRespositorySearchParams): PetEntity[];
-	update(id: number, model: PetRespositoryCreateParams): PetEntity;
-	delete(id: number): void;
+	findById(id: string): Promise<IPetDbModel>;
+	create(model: PetRespositoryCreateParams): Promise<IPetDbModel>;
+	search(model: PetRespositorySearchParams): Promise<IPetDbModel[]>;
+	update(id: string, model: PetRespositoryCreateParams): Promise<void>;
+	delete(id: string): Promise<void>;
 }

@@ -53,7 +53,7 @@ export class PetController extends BaseHttpController implements interfaces.Cont
 	public async find(
 		@queryParam() query: ListPetDto.Query,
 	): Promise<interfaces.IHttpActionResult> {
-		const response: any[] = this._listPetService.execute(query);
+		const response: any[] = await this._listPetService.execute(query);
 
 		return this.json(response);
 	}
@@ -63,7 +63,7 @@ export class PetController extends BaseHttpController implements interfaces.Cont
 		@requestParam('id') id: string,
 	): Promise<interfaces.IHttpActionResult> {
 		try {
-			const pet = await this._findByIdService.execute(+id);
+			const pet = await this._findByIdService.execute(id);
 			
 			return this.json(pet);
 		} catch (error) {
@@ -100,7 +100,7 @@ export class PetController extends BaseHttpController implements interfaces.Cont
 		@requestParam('id') id: string,
 		@requestBody() body: UpdatePetDto.Body,
 	): Promise<interfaces.IHttpActionResult> {
-		const response = this._updatePetService.execute(+id, body)
+		const response = this._updatePetService.execute(id, body as any)
 
 		return this.json(response)
 	}
@@ -112,7 +112,7 @@ export class PetController extends BaseHttpController implements interfaces.Cont
 	public async delete(
 		@requestParam('id') id: string,
 	): Promise<interfaces.IHttpActionResult> {
-		this._deletePetService.execute(+id)
+		this._deletePetService.execute(id)
 
 		return this.json({})
 	}

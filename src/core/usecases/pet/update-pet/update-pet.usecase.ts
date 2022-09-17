@@ -6,6 +6,7 @@ import { PetEntity } from "@core/entity/pet.entity";
 import { UpdatePetInterface, UpdatePetUseCaseParams } from "./update-pet.interface";
 
 import { PetRepositoryInterface } from "../../../providers/data/pet-repository.interface";
+import { IPetDbModel } from "src/infra/data/models/pet.model";
 
 @injectable()
 export class UpdatePetUseCase implements UpdatePetInterface {
@@ -18,15 +19,13 @@ export class UpdatePetUseCase implements UpdatePetInterface {
     this._petRepository = petRepository;
   }
 
-  execute(id: number, body: UpdatePetUseCaseParams): PetEntity {
+  async execute(id: string, body: UpdatePetUseCaseParams): Promise<void> {
     const petFromDb = this._petRepository.findById(id)
 
     if (!petFromDb) {
       throw new Error("Pet does not exists");
     }
 
-    const result = this._petRepository.update(id, body)
-
-    return result;
+    await this._petRepository.update(id, body);
   }
 }

@@ -1,3 +1,4 @@
+import { Model } from "mongoose";
 import { injectable } from "inversify";
 
 import {
@@ -7,69 +8,42 @@ import {
 } from "../../../core/providers/data/pet-type-repository.interface";
 
 import { PetTypeEntity } from "../../../core/entity/pet-type.entity";
+import { IPetTypeDbModel, PetTypeDbModel } from "../models/pet-type.model";
 
 let data: PetTypeEntity[] = [];
 
 @injectable()
 export class PetTypeRepository implements PetTypeRepositoryInterface {
-	create(model: PetTypeRespositoryCreateParams): PetTypeEntity {
-		const dataSorted = data.sort((a, b) => {
-			if ( a.id > b.id ){
-				return -1;
-			}
-			if ( a.id < b.id ){
-				return 1;
-			}
-			return 0;
-		})
 
-		const lastId = dataSorted[0] ? dataSorted[0].id : 0
+	private _petTypeDbModel: Model<IPetTypeDbModel>
 
-		const id = lastId + 1;
-
-		const dataModel = {
-			id,
-			name: model.name,
-		}
-
-		data.push(dataModel);
-
-		return PetTypeEntity.build(
-			dataModel.id,
-			dataModel.name
-		);
+	constructor() {
+		this._petTypeDbModel = PetTypeDbModel
 	}
 
-	search(model: PetTypeRespositorySearchParams): PetTypeEntity[] {
-		if (model.name) {
-			return data.filter(item => item.name === model.name)
-		}
-		return data
+	async create(dto: PetTypeRespositoryCreateParams): Promise<IPetTypeDbModel> {
+		const petType = await this._petTypeDbModel.create({
+			name: dto.name
+		});
+
+		await petType.save();
+
+		return petType;
 	}
 
-	findById(id: number): PetTypeEntity {
-		return data.find(item => item.id === id)
+	async search(dto: PetTypeRespositorySearchParams): Promise<IPetTypeDbModel[]> {
+		return this._petTypeDbModel.find();
 	}
 
-	update(id: number, body: PetTypeRespositoryCreateParams): PetTypeEntity {
-		let pet
-
-		data = data.map(item => {
-			if (item.id == id) {
-				pet = {
-					...item,
-					...body
-				}
-
-				return pet
-			}
-			return item
-		})
-
-		return pet
+	async findById(id: string): Promise<IPetTypeDbModel> {
+		return this._petTypeDbModel.findById(id);
 	}
 
-	delete(id: number): void {
-		data = data.filter(item => item.id !== id)
+	async update(id: string, body: PetTypeRespositoryCreateParams): Promise<void> {
+		await this._petTypeDbModel.updateOne({ _id: id }, { ...body });
+	}
+
+	async delete(id: string): Promise<void> {
+		await this._petTypeDbModel.deleteOne({ _id: id });
 	}
 }

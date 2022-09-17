@@ -5,5 +5,5 @@ export class UpdatePetTypeUseCaseParams {
 }
 
 export interface UpdatePetTypeInterface {
-	execute(id: number, body: UpdatePetTypeUseCaseParams): PetTypeEntity;
+	execute(id: string, body: UpdatePetTypeUseCaseParams): Promise<void>;
 }

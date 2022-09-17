@@ -2,9 +2,9 @@ import "reflect-metadata";
 import { inject, injectable } from "inversify";
 
 import TYPES from "../../../../types";
-import { PetTypeEntity } from "@core/entity/pet-type.entity";
 import { FindPetTypeByIdInterface } from "./find-pet-type-by-id.interface";
 import { PetTypeRepositoryInterface } from "@core/providers/data/pet-type-repository.interface";
+import { IPetTypeDbModel } from "src/infra/data/models/pet-type.model";
 
 @injectable()
 export class FindPetTypeByIdUseCase implements FindPetTypeByIdInterface {
@@ -16,7 +16,7 @@ export class FindPetTypeByIdUseCase implements FindPetTypeByIdInterface {
     this._petTypeRepository = petTypeRepository;
   }
 
-	execute(id: number): PetTypeEntity {
+	async execute(id: string): Promise<IPetTypeDbModel> {
 		return this._petTypeRepository.findById(id);
 	}
 }

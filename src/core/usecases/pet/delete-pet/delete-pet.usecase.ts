@@ -2,7 +2,6 @@ import "reflect-metadata";
 import { inject, injectable } from "inversify";
 
 import TYPES from "../../../../types";
-import { PetEntity } from "@core/entity/pet.entity";
 import { DeletePetInterface } from "./delete-pet.interface";
 
 import { PetRepositoryInterface } from "../../../providers/data/pet-repository.interface";
@@ -18,7 +17,7 @@ export class DeletePetUseCase implements DeletePetInterface {
     this._petRepository = petRepository;
   }
 
-  execute(id: number): void {
+  async execute(id: string): Promise<void> {
     const petFromDb = this._petRepository.findById(id)
 
     if (!petFromDb) {

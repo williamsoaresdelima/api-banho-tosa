@@ -1,79 +1,52 @@
+import { Model } from "mongoose";
 import { injectable } from "inversify";
 
 import {
 	PetRepositoryInterface,
+	PetRespositorySearchParams,
 	PetRespositoryCreateParams,
-	PetRespositorySearchParams
 } from "../../../core/providers/data/pet-repository.interface";
 
-import { PetEntity } from "../../../core/entity/pet.entity";
-
-let data: PetEntity[] = [];
+import { IPetDbModel, PetDbModel } from "../models/pet.model";
 
 @injectable()
 export class PetRepository implements PetRepositoryInterface {
-	create(model: PetRespositoryCreateParams): PetEntity {
-		const dataSorted = data.sort((a, b) => {
-			if ( a.id > b.id ){
-				return -1;
-			}
-			if ( a.id < b.id ){
-				return 1;
-			}
-			return 0;
+
+	private _petDbModel: Model<IPetDbModel>
+
+	constructor() {
+		this._petDbModel = PetDbModel
+	}
+
+	async create(dto: PetRespositoryCreateParams): Promise<IPetDbModel> {
+		const pet = await this._petDbModel.create({
+			name: dto.name,
+			age: dto.age,
+			petType: dto.petType
 		})
 
-		const lastId = dataSorted[0] ? dataSorted[0].id : 0
-
-		const id = lastId + 1;
-
-		const dataModel = {
-			id,
-			name: model.name,
-			age: model.age,
-			petType: model.petType
-		}
-
-		data.push(dataModel);
-
-		return PetEntity.build(
-			dataModel.id,
-			dataModel.name,
-			dataModel.age,
-			dataModel.petType
-		);
-	}
-
-	search(model: PetRespositorySearchParams): PetEntity[] {
-		if (model.name) {
-			return data.filter(item => item.name === model.name)
-		}
-		return data
-	}
-
-	findById(id: number): PetEntity {
-		return data.find(item => item.id === id)
-	}
-
-	update(id: number, body: PetRespositoryCreateParams): PetEntity {
-		let pet
-
-		data = data.map(item => {
-			if (item.id == id) {
-				pet = {
-					...item,
-					...body
-				}
-
-				return pet
-			}
-			return item
-		})
+		await pet.save()
 
 		return pet
 	}
 
-	delete(id: number): void {
-		data = data.filter(item => item.id !== id)
+	async search(model: PetRespositorySearchParams): Promise<IPetDbModel[]> {
+		const pets = await this._petDbModel.find()
+		
+		return pets
+	}
+
+	async findById(id: string): Promise<IPetDbModel> {
+		const pet = await this._petDbModel.findById(id)
+
+		return pet as any
+	}
+
+	async update(id: string, body: PetRespositoryCreateParams): Promise<void> {
+		await this._petDbModel.updateOne({ _id: id }, { ...body })
+	}
+
+	async delete(id: string): Promise<void> {
+		await this._petDbModel.deleteOne({ _id: id });
 	}
 }

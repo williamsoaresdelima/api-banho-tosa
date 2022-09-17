@@ -17,15 +17,13 @@ export class UpdatePetTypeUseCase implements UpdatePetTypeInterface {
     this._petTypeRepository = petTypeRepository;
   }
 
-  execute(id: number, body: UpdatePetTypeUseCaseParams): PetTypeEntity {
-    const petFromDb = this._petTypeRepository.findById(id)
+  async execute(id: string, body: UpdatePetTypeUseCaseParams): Promise<void> {
+    const petType = this._petTypeRepository.findById(id);
 
-    if (!petFromDb) {
+    if (!petType) {
       throw new Error("Pet type does not exists");
     }
 
-    const result = this._petTypeRepository.update(id, body)
-
-    return result;
+    await this._petTypeRepository.update(id, body);
   }
 }

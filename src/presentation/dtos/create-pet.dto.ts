@@ -11,8 +11,8 @@ export namespace CreatePetDto {
 		@IsNotEmpty()
 		age: number;
 
-		@IsNumber()
+		@IsString()
 		@IsNotEmpty()
-		petType: number;
+		petType: string;
 	}
 }

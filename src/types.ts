@@ -10,6 +10,7 @@ const TYPES = {
     UpdatePetTypeInterface: Symbol.for("UpdatePetTypeInterface"),
     DeletePetTypeInterface: Symbol.for("DeletePetTypeInterface"),
     PetRepositoryInterface: Symbol.for("PetRepositoryInterface"),
+    UserRepositoryInterface: Symbol.for("UserRepositoryInterface"),
     FindPetTypeByIdInterface: Symbol.for("FindPetTypeByIdInterface"),
     PetTypeRepositoryInterface: Symbol.for("PetTypeRepositoryInterface"),
 };

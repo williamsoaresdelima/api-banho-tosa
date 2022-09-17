@@ -17,7 +17,7 @@ export class DeletePetTypeUseCase implements DeletePetTypeInterface {
     this._petTypeRepository = petTypeRepository;
   }
 
-  execute(id: number): void {
+  execute(id: string): void {
     const petFromDb = this._petTypeRepository.findById(id)
 
     if (!petFromDb) {
