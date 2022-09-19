@@ -1,3 +1,3 @@
 export interface DeletePetTypeInterface {
-	execute(id: string): void;
+	execute(id: string): Promise<void>;
 }

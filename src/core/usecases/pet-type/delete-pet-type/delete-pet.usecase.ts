@@ -17,13 +17,13 @@ export class DeletePetTypeUseCase implements DeletePetTypeInterface {
     this._petTypeRepository = petTypeRepository;
   }
 
-  execute(id: string): void {
+  async execute(id: string): Promise<void> {
     const petFromDb = this._petTypeRepository.findById(id)
 
     if (!petFromDb) {
       throw new Error("Pet type does not exists");
     }
 
-    this._petTypeRepository.delete(id)
+    await this._petTypeRepository.delete(id)
   }
 }

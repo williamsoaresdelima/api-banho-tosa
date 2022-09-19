@@ -2,7 +2,6 @@ import "reflect-metadata";
 import mongoose from "mongoose";
 import * as express from "express";
 import { Container } from "inversify";
-import * as bodyParser from "body-parser";
 import { InversifyExpressServer } from "inversify-express-utils";
 
 import TYPES from "./types";
@@ -13,15 +12,21 @@ import "./presentation/controllers/pet-type.controller";
 
 import { PetRepository } from "./infra/data/repositories/pet.repository";
 import { UserRepository } from "./infra/data/repositories/user.repository";
+import { ListUserUseCase } from "./core/usecases/user/list/list-user.usecase";
 import { ListPetUseCase } from "./core/usecases/pet/list-pet/list-pet.usecase";
 import { CustomMiddleware } from "./presentation/middlewares/custom.middleware";
+import { ListUserInterface } from "./core/usecases/user/list/list-user.interface";
 import { PetTypeRepository } from "./infra/data/repositories/pet-type.repository";
 import { ListPetInterface } from "./core/usecases/pet/list-pet/list-pet.interface";
+import { DeleteUserUseCase } from "./core/usecases/user/delete/delete-user.usecase";
+import { UpdateUserUseCase } from "./core/usecases/user/update/update-user.usecase";
 import { CreateUserUseCase } from "./core/usecases/user/create/create-user.usecase";
 import { UpdatePetUseCase } from "./core/usecases/pet/update-pet/update-pet.usecase";
 import { DeletePetUseCase } from "./core/usecases/pet/delete-pet/delete-pet.usecase";
 import { CreatePetUseCase } from "./core/usecases/pet/create-pet/create-pet.usecase";
-import { CreateUserInterface } from "@core/usecases/user/create/create-user.interface";
+import { DeleteUserInterface } from "./core/usecases/user/delete/delete-user.interface";
+import { UpdateUserInterface } from "./core/usecases/user/update/update-user.interface";
+import { CreateUserInterface } from "./core/usecases/user/create/create-user.interface";
 import { PetRepositoryInterface } from "./core/providers/data/pet-repository.interface";
 import { CreatePetInterface } from "./core/usecases/pet/create-pet/create-pet.interface";
 import { UpdatePetInterface } from "./core/usecases/pet/update-pet/update-pet.interface";
@@ -30,9 +35,11 @@ import { DeletePetInterface } from "./core//usecases/pet/delete-pet/delete-pet.i
 import { FindPetByIdUseCase } from "./core/usecases/pet/find-pet-by-id/find-pet-by-id.usecase";
 import { PetTypeRepositoryInterface } from "./core/providers/data/pet-type-repository.interface";
 import { ListPetTypeUseCase } from "./core/usecases/pet-type/list-pet-type/list-pet-type.usecase";
-import { FindPetByIdInterface } from "./core/usecases/pet/find-pet-by-id/find-pet-by-id.interface";
+import { FindUserByIdUserUseCase } from "./core/usecases/user/find-by-id/find-user-by-id.usecase";
+import { FindUserByIdInterface } from "./core/usecases/user/find-by-id/find-user-by-id.interface";
 import { CreatePetTypeUseCase } from "./core/usecases/pet-type/create-pet-type/create-pet.usecase";
 import { UpdatePetTypeUseCase } from "./core/usecases/pet-type/update-pet-type/update-pet.usecase";
+import { FindPetByIdInterface } from "./core/usecases/pet/find-pet-by-id/find-pet-by-id.interface";
 import { DeletePetTypeUseCase } from "./core/usecases/pet-type/delete-pet-type/delete-pet.usecase";
 import { ListPetTypeInterface } from "./core/usecases/pet-type/list-pet-type/list-pet-type.interface";
 import { CreatePetTypeInterface } from "./core/usecases/pet-type/create-pet-type/create-pet-type.interface";
@@ -52,19 +59,24 @@ export class App {
   }
 
   configDependencies(): void {
-
-    // container.bind<ListUserInterface>(TYPES.ListUserInterface).to(ListUserUseCase);
+    container
+      .bind<ListUserInterface>(TYPES.ListUserInterface)
+      .to(ListUserUseCase);
+      container
+      .bind<FindUserByIdInterface>(TYPES.FindUserByIdInterface)
+      .to(FindUserByIdUserUseCase);
     container
       .bind<CreateUserInterface>(TYPES.CreateUserInterface)
       .to(CreateUserUseCase);
-    // container
-    //   .bind<UpdateUserInterface>(TYPES.UpdateUserInterface)
-    //   .to(UpdateUserUseCase);
-    // container
-    //   .bind<DeleteUserInterface>(TYPES.DeleteUserInterface)
-    //   .to(DeletePetUseCase);
-
-    container.bind<ListPetInterface>(TYPES.ListPetInterface).to(ListPetUseCase);
+    container
+      .bind<UpdateUserInterface>(TYPES.UpdateUserInterface)
+      .to(UpdateUserUseCase);
+    container
+      .bind<DeleteUserInterface>(TYPES.DeleteUserInterface)
+      .to(DeleteUserUseCase);
+    container
+      .bind<ListPetInterface>(TYPES.ListPetInterface)
+      .to(ListPetUseCase);
     container
       .bind<CreatePetInterface>(TYPES.CreatePetInterface)
       .to(CreatePetUseCase);

@@ -2,8 +2,8 @@ import "reflect-metadata";
 import { inject, injectable } from "inversify";
 
 import TYPES from "../../../../types";
-import { DeletePetInterface } from "./delete-pet.interface";
 
+import { DeletePetInterface } from "./delete-pet.interface";
 import { PetRepositoryInterface } from "../../../providers/data/pet-repository.interface";
 
 @injectable()
@@ -24,6 +24,6 @@ export class DeletePetUseCase implements DeletePetInterface {
       throw new Error("Pet does not exists");
     }
 
-    this._petRepository.delete(id)
+    await this._petRepository.delete(id)
   }
 }
