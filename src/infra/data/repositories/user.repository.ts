@@ -18,23 +18,25 @@ export class UserRepository implements UserRepositoryInterface {
 			name: dto.name,
 			email: dto.email,
 			password: dto.password
-		})
+		});
 
-		await user.save()
+		await user.save();
 
-		return user
+		delete user.password;
+
+		return user;
 	}
 
 	async search(model: UserRespositorySearchParams): Promise<IUserDbModel[]> {
-		const users = await this._userDbModel.find()
+		const users = await this._userDbModel.find().select('-password');
 		
-		return users
+		return users;
 	}
 
 	async findById(id: string): Promise<IUserDbModel> {
-		const user = await this._userDbModel.findById(id)
+		const user = await this._userDbModel.findById(id).select('-password');
 
-		return user as any
+		return user as any;
 	}
 
 	async update(id: string, body: UserRespositoryCreateParams): Promise<void> {
