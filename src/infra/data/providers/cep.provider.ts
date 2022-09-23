@@ -9,8 +9,6 @@ export class CepProvider implements CepProviderInterface {
     try {
       const response = await axios.get<CepProviderResponse>(`https://viacep.com.br/ws/${cep}/json`);
 
-      console.log('RESPONSE_CEP_PROVIDER: ', response.data)
-
       return response.data
     } catch (error) {
       return null
