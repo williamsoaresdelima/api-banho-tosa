@@ -13,6 +13,7 @@ export type UserRespositoryCreateParams = {
 
 export interface UserRepositoryInterface {
 	findById(id: string): Promise<IUserDbModel>;
+	findByEmail(email: string): Promise<IUserDbModel | null>;
 	create(model: UserRespositoryCreateParams): Promise<IUserDbModel>;
 	search(model: UserRespositorySearchParams): Promise<IUserDbModel[]>;
 	update(id: string, model: UserRespositoryCreateParams): Promise<void>;

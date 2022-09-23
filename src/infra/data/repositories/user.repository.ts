@@ -39,6 +39,12 @@ export class UserRepository implements UserRepositoryInterface {
 		return user as any;
 	}
 
+	async findByEmail(email: string): Promise<IUserDbModel> {
+		const user = await this._userDbModel.findOne({ email });
+
+		return user as any;
+	}
+
 	async update(id: string, body: UserRespositoryCreateParams): Promise<void> {
 		await this._userDbModel.updateOne({ _id: id }, { ...body })
 	}

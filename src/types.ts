@@ -1,4 +1,5 @@
 const TYPES = {
+    LoginInterface: Symbol.for("LoginInterface"),
     CustomMiddleware: Symbol.for("CustomMiddleware"),
     ListPetInterface: Symbol.for("ListPetInterface"),
     ListUserInterface: Symbol.for("ListUserInterface"),
