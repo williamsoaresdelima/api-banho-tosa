@@ -35,7 +35,9 @@ export class LoginUseCase implements LoginInterface {
       throw new Error('email or password does not correct');
     }
 
-    const token = jwt.sign({ email: foundUser.email }, secrets.SECRET_JWT_CODE)   
+    const token = jwt.sign({ email: foundUser.email }, secrets.SECRET_JWT_CODE, {
+      expiresIn: '12h'
+    })   
 
     return {
       token

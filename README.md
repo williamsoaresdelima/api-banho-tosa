@@ -44,6 +44,8 @@ npm run build
 npm run start
 ```
 
+## Collection of example
+<a href="https://github.com/williamsoaresdelima/api-banho-tosa/docs/banho_tosa.postman_collection.json">Collection</a>
 <br/>
 
 <h3 align="left">Languages ​​and tools used in the project:</h3>
