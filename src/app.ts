@@ -8,6 +8,7 @@ import TYPES from "./types";
 
 import "./presentation/controllers/pet.controller";
 import "./presentation/controllers/user.controller";
+import "./presentation/controllers/owner.controller";
 import "./presentation/controllers/pet-type.controller";
 
 import { PetRepository } from "./infra/data/repositories/pet.repository";
@@ -48,6 +49,13 @@ import { DeletePetTypeInterface } from "./core/usecases/pet-type/delete-pet-type
 import { FindPetTypeByIdUseCase } from "./core/usecases/pet-type/find-pet-type-by-id/find-pet-type-by-id.usecase";
 import { FindPetTypeByIdInterface } from "./core/usecases/pet-type/find-pet-type-by-id/find-pet-type-by-id.interface";
 
+import { CepProvider } from "./infra/data/providers/cep.provider";
+import { CepProviderInterface } from "./core/providers/data/cep-provider.interface";
+import { CreateOwnerUseCase } from "./core/usecases/owner/create/create-owner.usecase";
+import { CreateOwnerInterface } from "./core/usecases/owner/create/create-owner.interface";
+import { OwnerRepositoryInterface } from "./core/providers/data/owner-repository.interface";
+import { OwnerRepository } from "./infra/data/repositories/owner.repository";
+
 const PORT = process.env.PORT || 3000;
 
 const container = new Container();
@@ -60,9 +68,18 @@ export class App {
 
   configDependencies(): void {
     container
+      .bind<CepProviderInterface>(TYPES.CepProviderInterface)
+      .to(CepProvider);
+    container
+      .bind<CreateOwnerInterface>(TYPES.CreateOwnerInterface)
+      .to(CreateOwnerUseCase);
+    container
+      .bind<OwnerRepositoryInterface>(TYPES.OwnerRepositoryInterface)
+      .to(OwnerRepository);
+    container
       .bind<ListUserInterface>(TYPES.ListUserInterface)
       .to(ListUserUseCase);
-      container
+    container
       .bind<FindUserByIdInterface>(TYPES.FindUserByIdInterface)
       .to(FindUserByIdUserUseCase);
     container
