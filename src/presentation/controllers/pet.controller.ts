@@ -12,8 +12,17 @@ import {
   requestParam,
   BaseHttpController,
 } from "inversify-express-utils";
+import {
+  ApiPath,
+  ApiOperationGet,
+  ApiOperationPut,
+  ApiOperationPost,
+  ApiOperationDelete,
+  SwaggerDefinitionConstant,
+} from "swagger-express-ts";
 
 import TYPES from "../../types";
+
 import { ListPetDto } from "../dtos/list-pet.dto";
 import { CreatePetDto } from "../dtos/create-pet.dto";
 import { UpdatePetDto } from "../dtos/update-pet.dto";
@@ -25,6 +34,11 @@ import { CreatePetInterface } from "../../core/usecases/pet/create-pet/create-pe
 import { FindPetByIdInterface } from "@core/usecases/pet/find-pet-by-id/find-pet-by-id.interface";
 import { ValidateTokenMiddleware } from "../../presentation/middlewares/validate-token.middleware";
 
+@ApiPath({
+  path: "/pet",
+  name: "Pet",
+  security: { basicAuth: [] },
+})
 @controller("/pet", ValidateTokenMiddleware)
 export class PetController
   extends BaseHttpController
@@ -51,6 +65,20 @@ export class PetController
     this._deletePetService = deletePetUseCase;
   }
 
+  @ApiOperationGet({
+    description: "Get pets objects list",
+    summary: "Get pet list",
+    responses: {
+      200: {
+        description: "Success",
+        type: SwaggerDefinitionConstant.Response.Type.ARRAY,
+        model: "Pet",
+      },
+    },
+    security: {
+      apiKeyHeader: [],
+    },
+  })
   @httpGet("/")
   public async find(
     @queryParam() query: ListPetDto.Query
@@ -60,6 +88,30 @@ export class PetController
     return this.json(response);
   }
 
+  @ApiOperationGet({
+    path: "/:id",
+    description: "Get pet objects",
+    summary: "Get pet",
+    parameters: {
+      path: {
+        id: {
+          name: "id",
+          required: true,
+          type: "number",
+        },
+      },
+    },
+    responses: {
+      200: {
+        description: "Success",
+        type: SwaggerDefinitionConstant.Response.Type.OBJECT,
+        model: "Pet",
+      },
+    },
+    security: {
+      apiKeyHeader: [],
+    },
+  })
   @httpGet("/:id")
   public async findById(
     @requestParam("id") id: string
@@ -77,6 +129,17 @@ export class PetController
     }
   }
 
+  @ApiOperationPost({
+    description: "Create a pet",
+    summary: "Create pet",
+    parameters: {
+      body: { description: "New pet", required: true, model: "Pet" },
+    },
+    responses: {
+      200: { description: "Success" },
+      400: { description: "Parameters fail" },
+    },
+  })
   @httpPost("/", ValidateDtoMiddleware(CreatePetDto.Body, "body"))
   public async create(
     @requestBody() body: CreatePetDto.Body
@@ -90,6 +153,27 @@ export class PetController
     return this.json(result);
   }
 
+  @ApiOperationPut({
+    path: "/:id",
+    description: "Update pet",
+    summary: "Update pet",
+    parameters: {
+      path: {
+        id: {
+          name: "id",
+          required: true,
+          type: "number",
+        },
+      },
+      body: { description: "pet", required: true, model: "Pet" },
+    },
+    responses: {
+      200: { description: "Success" },
+    },
+    security: {
+      apiKeyHeader: [],
+    },
+  })
   @httpPut(
     "/:id",
     ValidateDtoMiddleware(UpdatePetDto.Params, "params"),
@@ -104,6 +188,26 @@ export class PetController
     return this.json(response);
   }
 
+  @ApiOperationDelete({
+    path: "/:id",
+    description: "Delete pet",
+    summary: "Delete pet",
+    parameters: {
+      path: {
+        id: {
+          name: "id",
+          required: true,
+          type: "number",
+        },
+      },
+    },
+    responses: {
+      200: { description: "Success" },
+    },
+    security: {
+      apiKeyHeader: [],
+    },
+  })
   @httpDelete("/:id", ValidateDtoMiddleware(UpdatePetDto.Params, "params"))
   public async delete(
     @requestParam("id") id: string

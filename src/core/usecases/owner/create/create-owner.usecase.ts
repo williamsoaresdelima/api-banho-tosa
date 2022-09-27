@@ -5,9 +5,9 @@ import TYPES from "../../../../types";
 
 import { CreateOwnerInterface, CreateOwnerUseCaseParams } from "./create-owner.interface";
 
+import { IOwnerDbModel } from "src/infra/data/models/owner.model";
 import { CepProviderInterface } from "../../../providers/data/cep-provider.interface";
 import { OwnerRepositoryInterface } from "../../../providers/data/owner-repository.interface";
-import { IOwnerDbModel } from "src/infra/data/models/owner.model";
 
 @injectable()
 export class CreateOwnerUseCase implements CreateOwnerInterface {

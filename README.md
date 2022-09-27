@@ -44,6 +44,11 @@ npm run build
 npm run start
 ```
 
+## Swagger
+
+<a href="http://localhost:3000/api-docs/swagger/#/">Swagger</a>
+<br/>
+
 ## Collection of example
 <a href="https://github.com/williamsoaresdelima/api-banho-tosa/docs/banho_tosa.postman_collection.json">Collection</a>
 <br/>

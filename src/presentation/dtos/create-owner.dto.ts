@@ -1,22 +1,46 @@
 import { IsNotEmpty, IsString } from "class-validator";
+import { ApiModel, ApiModelProperty } from "swagger-express-ts";
 
 export namespace CreateOwnerDto {
-
-	export class Body {
-		@IsString()
-		@IsNotEmpty()
-		name: string;
-
-		@IsString()
-		@IsNotEmpty()
-		cep: string;
-
-		@IsString()
-		@IsNotEmpty()
-		phone: string;
-
+  @ApiModel({
+    description: "Owner",
+    name: "Owner",
+  })
+  export class Body {
+    @ApiModelProperty({
+      description: "name",
+      required: true,
+      example: ["Jonh"],
+    })
     @IsString()
-		@IsNotEmpty()
-		number: string;
-	}
+    @IsNotEmpty()
+    name: string;
+
+		@ApiModelProperty({
+      description: "cep",
+      required: true,
+      example: ["94890237"],
+    })
+    @IsString()
+    @IsNotEmpty()
+    cep: string;
+
+		@ApiModelProperty({
+      description: "phone",
+      required: true,
+      example: ["11 99999 9999"],
+    })
+    @IsString()
+    @IsNotEmpty()
+    phone: string;
+
+		@ApiModelProperty({
+      description: "number",
+      required: true,
+      example: ["10"],
+    })
+    @IsString()
+    @IsNotEmpty()
+    number: string;
+  }
 }

@@ -1,8 +1,15 @@
 export class UpdateOwnerUseCaseParams {
 	name: string;
-	phone: string;
-	cep: string;
-	number: string;
+  phone: string;
+	address: {
+    cep: string,
+    logradouro: string,
+    numero: string,
+    complemento: string,
+    bairro: string,
+    localidade: string,
+    uf: string
+  }
 }
 
 export interface UpdateOwnerInterface {

@@ -22,8 +22,11 @@
     "inversify": "^6.0.1",
     "inversify-express-utils": "^6.4.3",
     "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.21",
     "mongoose": "^6.6.0",
     "reflect-metadata": "^0.1.13",
+    "swagger-express-ts": "^1.1.0",
+    "swagger-ui-dist": "^4.14.1",
     "typescript": "^4.7.4"
   },
   "devDependencies": {
