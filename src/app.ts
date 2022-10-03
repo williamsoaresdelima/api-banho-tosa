@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import "reflect-metadata";
 import mongoose from "mongoose";
 import * as express from "express";
@@ -69,6 +70,7 @@ import { FindPetTypeByIdUseCase } from "./core/usecases/pet-type/find-pet-type-b
 import { FindPetTypeByIdInterface } from "./core/usecases/pet-type/find-pet-type-by-id/find-pet-type-by-id.interface";
 
 const PORT = process.env.PORT || 3000;
+const MONGODB_URI = process.env.MONGODB_URI || '';
 
 const container = new Container();
 
@@ -204,7 +206,7 @@ export class App {
       });
     });
 
-    await mongoose.connect("mongodb://docker:mongopw@localhost:49153/admin");
+    await mongoose.connect(MONGODB_URI);
 
     const app = server.build();
 
